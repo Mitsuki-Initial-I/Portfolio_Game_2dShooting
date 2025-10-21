@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
             if (time_Count >= bulletSpan)
             {
                 time_Count = 0;
-                Instantiate(bullet);
+                Instantiate(bullet,transform.position+new Vector3(0,-1.5f,0),Quaternion.identity);
             }
         }
     }
