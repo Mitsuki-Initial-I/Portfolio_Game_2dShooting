@@ -1,16 +1,16 @@
 using UnityEngine;
 
+public enum MoveType
+{
+    Straight,
+    Zigzag,
+    Homing,
+    Circle,
+    Wave
+}
+
 public class EnemyMoveController : MonoBehaviour
 {
-    public enum MoveType
-    {
-        Straight,
-        Zigzag,
-        Homing,
-        Circle,
-        Wave
-    }
-
     [Header("ˆÚ“®ƒ^ƒCƒvÝ’è")]
     public MoveType moveType = MoveType.Straight;
 
@@ -35,6 +35,9 @@ public class EnemyMoveController : MonoBehaviour
     private Vector3 startPos;
     private float startY;
 
+    public SceneManager_Battle spawner;
+    public float deadPoint;
+
     void Start()
     {
         startPos = transform.position;
@@ -49,6 +52,10 @@ public class EnemyMoveController : MonoBehaviour
 
     void Update()
     {
+        if(deadPoint>transform.position.x)
+        {
+            Destroy(gameObject);
+        }
         switch (moveType)
         {
             case MoveType.Straight:
@@ -103,5 +110,13 @@ public class EnemyMoveController : MonoBehaviour
     {
         float yOffset = Mathf.Sin(Time.time * frequency) * amplitude;
         transform.position = startPos + Vector3.left * speed * Time.time + Vector3.up * yOffset;
+    }
+
+    private void OnDestroy()
+    {
+        if(spawner != null)
+        {
+            spawner.EnemyDeath(this.gameObject);
+        }
     }
 }

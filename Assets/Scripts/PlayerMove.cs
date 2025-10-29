@@ -46,6 +46,7 @@ public class PlayerMove : MonoBehaviour
         GetCamraScale();
         time_Count += Time.deltaTime;
         time_Count = Mathf.Clamp(time_Count, 0, bulletSpan);
+        
         if (Input.GetKey(KeyCode.D)) { mode_x = 1; }
         else if (Input.GetKey(KeyCode.A)) { mode_x = -1; }
         else { mode_x = 0; }
