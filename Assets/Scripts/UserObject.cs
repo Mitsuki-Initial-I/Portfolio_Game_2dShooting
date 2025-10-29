@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class UserObject : MonoBehaviour
 {
-    [SerializeField]
-    ScenesName scenesName;
+    private static UserObject instance = null;
+    public static UserObject Instance => instance ?? (instance=GameObject.Find("UserObject").GetComponent<UserObject>());
 
-    private void Update()
+    private void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.Return))    
-            SceneChange.SceneChangeProcess(scenesName);
+        if (this != Instance) 
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
     }
+
+    public StagenameEnum selectStageName;
 }
